@@ -4,182 +4,338 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Irada|Presentation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Inter, sans-serif;
-      color: #fff;
-      background: #000;
-      scroll-behavior: smooth;
+  @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    font-family: 'Major Mono Display', monospace;
+    background: #000;
+    color: #0ff;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Video fullscreen background */
+  .video-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.3);
+  }
+
+  /* Sticky transparent menu */
+  header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 10;
+    border-bottom: 1px solid #0ff;
+  }
+
+  /* Logo styling with neon glitch effect */
+  .logo {
+    font-size: 2.2rem;
+    color: #0ff;
+    text-transform: uppercase;
+    position: relative;
+    font-weight: 900;
+    user-select: none;
+    cursor: default;
+  }
+
+  /* Glitch effect */
+  .logo::before,
+  .logo::after {
+    content: 'Irada';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    color: #0ff;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch 2s infinite;
+  }
+
+  .logo::after {
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    animation-delay: 1s;
+  }
+
+  @keyframes glitch {
+    0% {
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(0);
     }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 1rem;
-      text-align: center;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
+    20% {
+      clip-path: polygon(0 5%, 100% 5%, 100% 50%, 0 50%);
+      transform: translate(-2px, -2px);
+    }
+    40% {
+      clip-path: polygon(0 10%, 100% 10%, 100% 55%, 0 55%);
+      transform: translate(2px, 2px);
+    }
+    60% {
+      clip-path: polygon(0 15%, 100% 15%, 100% 60%, 0 60%);
+      transform: translate(-2px, 2px);
+    }
+    80% {
+      clip-path: polygon(0 20%, 100% 20%, 100% 65%, 0 65%);
+      transform: translate(2px, -2px);
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(0);
+    }
+  }
+
+  nav {
+    margin-left: auto;
+  }
+
+  nav a {
+    color: #0ff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #0ff;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #fff;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  section {
+    height: 100vh;
+    padding: 80px 40px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Neon glow headings */
+  h1, h2 {
+    color: #0ff;
+    text-shadow:
+      0 0 5px #0ff,
+      0 0 10px #0ff,
+      0 0 20px #0ff,
+      0 0 40px #0ff;
+    user-select: none;
+  }
+
+  h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #00ffffcc;
+    line-height: 1.6;
+  }
+
+  /* Buttons with glitch/neon effect */
+  .btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0ff;
+    border: 2px solid #0ff;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    text-transform: uppercase;
+    overflow: hidden;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+
+  .btn::before,
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px solid #0ff;
+    pointer-events: none;
+    animation: glitch-btn 2s infinite;
+  }
+
+  .btn::after {
+    border-color: #00ffff;
+    animation-delay: 1s;
+  }
+
+  .btn:hover {
+    color: #fff;
+  }
+
+  @keyframes glitch-btn {
+    0% {
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(0);
+    }
+    20% {
+      clip-path: polygon(0 5%, 100% 5%, 100% 50%, 0 50%);
+      transform: translate(-2px, -2px);
+    }
+    40% {
+      clip-path: polygon(0 10%, 100% 10%, 100% 55%, 0 55%);
+      transform: translate(2px, 2px);
+    }
+    60% {
+      clip-path: polygon(0 15%, 100% 15%, 100% 60%, 0 60%);
+      transform: translate(-2px, 2px);
+    }
+    80% {
+      clip-path: polygon(0 20%, 100% 20%, 100% 65%, 0 65%);
+      transform: translate(2px, -2px);
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(0);
+    }
+  }
+
+  /* Animate sections on scroll */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #0ff;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2.8rem;
+    }
+    h2 {
+      font-size: 1.8rem;
     }
     nav a {
-      color: #fff;
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.8;
-      transition: opacity 0.3s;
-    }
-    nav a:hover {
-      opacity: 1;
+      margin-left: 15px;
+      font-size: 0.9rem;
     }
     section {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
+      padding: 80px 20px 40px 20px;
     }
-    .bg-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(0.4);
+    .btn {
+      padding: 12px 30px;
+      font-size: 1rem;
     }
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-      animation: glitch 1s infinite alternate;
-    }
-    p {
-      font-size: 1.3rem;
-      max-width: 800px;
-      line-height: 1.5;
-    }
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(2px, -1px); }
-      60% { transform: translate(-1px, 1px); }
-      80% { transform: translate(1px, -2px); }
-      100% { transform: translate(0); }
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .portfolio {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      padding: 2rem;
-    }
-    .project {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    .project img {
-      width: 100%;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-    }
-    .project h3 {
-      margin: 0.5rem 0;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="https://cdn.videvo.net/videvo_files/video/free/2019-04/small_watermarked/190329_03_City_Night_4k_008_preview.webm" type="video/webm" />
+    Your browser does not support the video tag.
+  </video>
 
-  <section id="home">
-    <video class="bg-video" src="backgrounds/hero-video.mp4" autoplay muted loop></video>
-    <div class="fade-in visible">
-      <h1>Hi, I'm Irada</h1>
-      <p>A creative web designer & front-end developer.</p>
-    </div>
+  <header>
+    <div class="logo">Irada</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="about" class="fade-in">
+    <h1>Welcome to Irada's World</h1>
+    <p>Creative vibes meet neon dreams. Explore the fusion of art and technology in a glitchy neon aesthetic.</p>
+    <button class="btn" onclick="location.href='#work'">Discover My Work</button>
   </section>
 
-  <section id="about">
-    <video class="bg-video" src="backgrounds/about-video.mp4" autoplay muted loop></video>
-    <div class="fade-in">
-      <h1>About Me</h1>
-      <p>I'm a student of Applied Informatics and self-studying design and 3D animation. I blend technical knowledge with creative passion.</p>
-    </div>
+  <section id="work" class="fade-in">
+    <h2>My Work</h2>
+    <p>Here you can showcase your projects, creations, or portfolio pieces. Use neon glowing frames and glitch effects for a modern edge.</p>
+    <button class="btn" onclick="location.href='#contact'">Get in Touch</button>
   </section>
 
-  <section id="skills">
-    <video class="bg-video" src="backgrounds/skills.mp4" autoplay muted loop></video>
-    <div class="fade-in">
-      <h1>Skills</h1>
-      <p>Web Design · HTML · CSS · JavaScript · Front-End Frameworks · Blender (3D) · UI/UX Design</p>
-    </div>
+  <section id="contact" class="fade-in">
+    <h2>Contact Me</h2>
+    <p>If you'd like to collaborate or just say hi, send me a message!</p>
+    <button class="btn" onclick="window.location='mailto:irada@example.com'">Email Me</button>
   </section>
 
-  <section id="portfolio">
-    <video class="bg-video" src="backgrounds/portfolio.mp4" autoplay muted loop></video>
-    <div class="fade-in">
-      <h1>Portfolio</h1>
-      <div class="portfolio">
-        <div class="project">
-          <img src="project1.jpg" alt="Project 1">
-          <h3>Portfolio Website</h3>
-          <p>A sleek personal site with animations and smooth scrolling.</p>
-        </div>
-        <div class="project">
-          <img src="project2.jpg" alt="Project 2">
-          <h3>Landing Page</h3>
-          <p>Creative product landing page with responsive design.</p>
-        </div>
-        <div class="project">
-          <img src="project3.jpg" alt="Project 3">
-          <h3>3D Animation Demo</h3>
-          <p>Short animation scene built in Blender and integrated on web.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <video class="bg-video" src="backgrounds/contact.mp4" autoplay muted loop></video>
-    <div class="fade-in">
-      <h1>Contact Me</h1>
-      <p>Email: <a href="mailto:irada@example.com" style="color:#fff;text-decoration:underline;">irada@example.com</a></p>
-    </div>
-  </section>
+  <footer>
+    &copy; 2025 Irada. All rights reserved.
+  </footer>
 
   <script>
+    // Simple scroll fade-in animation
     const faders = document.querySelectorAll('.fade-in');
-    const onScroll = () => {
-      faders.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.8) el.classList.add('visible');
-      });
+
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
     };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
+
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
   </script>
 </body>
 </html>
